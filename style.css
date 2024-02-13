@@ -92,8 +92,8 @@ hr {
 
 #reset {
     background-color: #ee2400;
-    color: #4d4d4d;
-    border: 2px solid #ff69b4;
+/*     color: black; */
+/*     border: 2px solid #ff69b4; */
     border-radius: 8px;
     margin-right: 100px;
     margin-top: 10px;
@@ -109,8 +109,8 @@ hr {
 
 #newGame {
     background-color: #0eff00;
-    color: #4d4d4d;
-    border: 2px solid #ff69b4;
+/*     color: #4d4d4d; */
+/*     border: 2px solid #ff69b4; */
     border-radius: 8px;
     margin-left: 100px;
     margin-top: 10px;
