@@ -91,7 +91,7 @@ hr {
 
 
 #reset {
-    background-color: #ffc0cb;
+    background-color: #ee2400;
     color: #4d4d4d;
     border: 2px solid #ff69b4;
     border-radius: 8px;
@@ -103,12 +103,12 @@ hr {
 }
 
 #reset:hover {
-    background-color: #ff69b4;
+    background-color: red;
     color: #ffffff;
 }
 
 #newGame {
-    background-color: #ffc0cb;
+    background-color: #0eff00;
     color: #4d4d4d;
     border: 2px solid #ff69b4;
     border-radius: 8px;
@@ -120,6 +120,6 @@ hr {
 }
 
 #newGame:hover {
-    background-color: #ff69b4;
+    background-color: green;
     color: #ffffff;
 }
