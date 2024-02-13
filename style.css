@@ -1,0 +1,125 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0ffff;
+    text-align: center;
+}
+
+hr {
+    width: 80%;
+    margin: 20px auto;
+    border: none;
+    border-top: 2px solid #555;
+}
+
+#heading {
+    color: #4d3232;
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.tile {
+    width: 58.4px;
+    height: 58.4px;
+    border: 1px solid #ccc;
+    float: left;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d3d3d3;
+    color: #2f4f4f;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tile:hover {
+    background-color: #a9a9a9;
+}
+
+#board {
+    border: 2px solid;
+    width: 540px;
+    height: 540px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#options {
+    width: 540px;
+    height: 60px;
+    border: 1px solid;
+}
+
+#options div {
+    border: 0.5px solid;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#options div:hover {
+    background-color: #f0f0f0;
+}
+
+.highlight {
+    background-color: #ffdab9;
+}
+
+.boxes:nth-child(3n) {
+    border-right: 1px solid black;
+}
+
+.boxes:nth-child(19),
+.boxes:nth-child(20),
+.boxes:nth-child(21),
+.boxes:nth-child(22),
+.boxes:nth-child(23),
+.boxes:nth-child(24),
+.boxes:nth-child(25),
+.boxes:nth-child(26),
+.boxes:nth-child(27),
+.boxes:nth-child(46),
+.boxes:nth-child(47),
+.boxes:nth-child(48),
+.boxes:nth-child(49),
+.boxes:nth-child(50),
+.boxes:nth-child(51),
+.boxes:nth-child(52),
+.boxes:nth-child(53),
+.boxes:nth-child(54) {
+    border-bottom: 1px solid black;
+}
+
+
+#reset {
+    background-color: #ffc0cb;
+    color: #4d4d4d;
+    border: 2px solid #ff69b4;
+    border-radius: 8px;
+    margin-right: 100px;
+    margin-top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#reset:hover {
+    background-color: #ff69b4;
+    color: #ffffff;
+}
+
+#newGame {
+    background-color: #ffc0cb;
+    color: #4d4d4d;
+    border: 2px solid #ff69b4;
+    border-radius: 8px;
+    margin-left: 100px;
+    margin-top: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#newGame:hover {
+    background-color: #ff69b4;
+    color: #ffffff;
+}
