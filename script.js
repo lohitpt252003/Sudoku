@@ -1,289 +1,212 @@
+let optionBox = document.getElementById("options");
 let board = document.getElementById("board");
-let options = document.querySelector("#options");
-let grid, problem, solution;
-let mistakes;
+let grid, problem, solution, mistakes, input;
 
 const questions = [
-    "003020600900305001001806400008102900700000008006708200002609500800203009005010300", 
-"200080300060070084030500209000105408000000000402706000301007040720040060004010003", 
-"000000907000420180000705026100904000050000040000507009920108000034059000507000000", 
-"030050040008010500460000012070502080000603000040109030250000098001020600080060020", 
-"020810740700003100090002805009040087400208003160030200302700060005600008076051090", 
-"100920000524010000000000070050008102000000000402700090060000000000030945000071006", 
-"043080250600000000000001094900004070000608000010200003820500000000000005034090710", 
-"480006902002008001900370060840010200003704100001060049020085007700900600609200018", 
-"000900002050123400030000160908000000070000090000000205091000050007439020400007000", 
-"001900003900700160030005007050000009004302600200000070600100030042007006500006800", 
-"000125400008400000420800000030000095060902010510000060000003049000007200001298000", 
-"062340750100005600570000040000094800400000006005830000030000091006400007059083260", 
-"300000000005009000200504000020000700160000058704310600000890100000067080000005437", 
-"630000000000500008005674000000020000003401020000000345000007004080300902947100080", 
-"000020040008035000000070602031046970200000000000501203049000730000000010800004000", 
-"361025900080960010400000057008000471000603000259000800740000005020018060005470329", 
-"050807020600010090702540006070020301504000908103080070900076205060090003080103040", 
-"080005000000003457000070809060400903007010500408007020901020000842300000000100080", 
-"003502900000040000106000305900251008070408030800763001308000104000020000005104800", 
-"000000000009805100051907420290401065000000000140508093026709580005103600000000000", 
-"020030090000907000900208005004806500607000208003102900800605007000309000030020050", 
-"005000006070009020000500107804150000000803000000092805907006000030400010200000600", 
-"040000050001943600009000300600050002103000506800020007005000200002436700030000040", 
-"004000000000030002390700080400009001209801307600200008010008053900040000000000800", 
-"360020089000361000000000000803000602400603007607000108000000000000418000970030014"
+    "  3 2 6  9  3 5  1  18 64    81 29  7       8  67 82    26 95  8  2 3  9  5 1 3  ", 
+"2   8 3   6  7  84 3 5  2 9   1 54 8         4 27 6   3 1  7 4 72  4  6   4 1   3", 
+"      9 7   42 18    7 5 261  9 4    5     4    5 7  992 1 8    34 59   5 7      ", 
+" 3  5  4   8 1 5  46     12 7 5 2 8    6 3    4 1 9 3 25     98  1 2 6   8  6  2 ", 
+" 2 81 74 7    31   9   28 5  9 4  874  2 8  316  3 2  3 27   6   56    8 76 51 9 ", 
+"1  92    524 1           7  5   81 2         4 27   9  6           3 945    71  6", 
+" 43 8 25 6             1 949    4 7    6 8    1 2    382 5             5 34 9 71 ", 
+"48   69 2  2  8  19  37  6 84  1 2    37 41    1 6  49 2  85  77  9  6  6 92   18", 
+"   9    2 5 1234   3    16 9 8       7     9       2 5 91    5   7439 2 4    7   ", 
+"  19    39  7  16  3   5  7 5      9  43 26  2      7 6  1   3  42  7  65    68  ", 
+"   1254    84     42 8      3     95 6 9 2 1 51     6      3 49     72    1298   ", 
+" 6234 75 1    56  57     4     948  4       6  583     3     91  64    7 59 8326 ", 
+"3          5  9   2  5 4    2    7  16     587 431 6     89 1      67 8      5437", 
+"63          5    8  5674       2      34 1 2       345     7  4 8 3  9 29471   8 ", 
+"    2  4   8 35       7 6 2 31 4697 2           5 12 3 49   73        1 8    4   ", 
+"361 259   8 96  1 4      57  8   471   6 3   259   8  74      5 2  18 6   547 329", 
+" 5 8 7 2 6   1  9 7 254   6 7  2 3 15 4   9 81 3 8  7 9   762 5 6  9   3 8 1 3 4 ", 
+" 8   5        3457    7 8 9 6 4  9 3  7 1 5  4 8  7 2 9 1 2    8423        1   8 ", 
+"  35 29      4    1 6   3 59  251  8 7 4 8 3 8  763  13 8   1 4    2      51 48  ", 
+"           98 51   519 742 29 4 1 65         14 5 8 93 267 958   51 36           ", 
+" 2  3  9    9 7   9  2 8  5  48 65  6 7   2 8  31 29  8  6 5  7   3 9    3  2  5 ", 
+"  5     6 7   9 2    5  1 78 415       8 3       928 59 7  6    3 4   1 2     6  ", 
+" 4     5   19436    9   3  6   5   21 3   5 68   2   7  5   2    24367   3     4 ", 
+"  4          3   239 7   8 4    9  12 98 13 76  2    8 1   8 539   4          8  ", 
+"36  2  89   361            8 3   6 24  6 3  76 7   1 8            418   97  3  14"
 ]; 
 
-let input;
-
-// create 9 X 9 board
-function setGame(){
-    mistakes = 0;
-    grid = [[], [], [], [], [], [], [], [], []];
-    let ind = Math.floor(questions.length * Math.random());
-    problem = questions[ind];
-    let ans = [];
-    for (let i = 0, counter = 0; i < 9; i++)    {
+function createOptions() {
+    for (let i = 0; i < 9; i++){
         let element = document.createElement("div");
-        element.classList.add("tile");
+        element.classList.add("option");
         element.innerText = i + 1;
-        element.classList.add("opt");
-        options.append(element);
-        ans.push([]);
-        for (let j = 0; j < 9; j++)        {
-            let element = document.createElement("div");
-            element.classList.add("tile");
-            element.classList.add("boxes")
-            element.id = `${i}-${j}`;
-            element.innerText = problem[counter];
-            board.append(element);
-            ans[i][j] = parseInt(problem[counter]);
-            grid[i][j] = parseInt(problem[counter++]);
-        }
+        optionBox.append(element);
     }
-    ans = solveSudoku(ans);
-    if (ans === "No solution exists."){
-        setGame();
-        return;
-    }
-    solution = "";
+}
+
+function createGrrid() {
     for (let i = 0; i < 9; i++){
         for (let j = 0; j < 9; j++){
-            solution += ans[i][j].toString();
+            let element = document.createElement("div");
+            element.id = `${i}-${j}`;
+            element.classList.add("tile");
+            board.append(element);
         }
     }
 }
 
-setGame();
+createOptions();
+createGrrid();
 
-// grid butons
-let buttons = document.querySelectorAll(".boxes");
-for (let button of buttons){
-    button.addEventListener("click", () =>{
-        if (button.innerText == '0'){
-            input = button;
-            highlightRowColBox(button.id);
-        }
-        else{
-            highlightSameNumbers(button.innerText);
-        }
-
-        checkGame();
-    })
+function load() {
+    mistakes = 0;
+    let ind = Math.floor(questions.length * Math.random());
+    problem = questions[ind];
+    grid = [];
+    solution = [];
 }
 
-// options
-options = document.querySelectorAll(".opt");
+load();
+
+let buttons = document.getElementsByClassName("tile");
+function fillGrid() {
+    for (let i = 0; i < 9; i++){
+        grid.push([]);
+        solution.push([]);
+        for (let j = 0; j < 9; j++){
+            buttons[9 * i + j].innerText = problem[9 * i + j];
+            grid[i][j] = problem[9 * i + j] == ' ' ? 0 : parseInt(problem[9 * i + j]);
+            solution[i][j] = grid[i][j];
+        }
+    }
+    solveSudoku(solution);
+    let s = "";
+    for (let i = 0; i < 9; i++){
+        for (let j = 0; j < 9; j++){
+            s += solution[i][j];
+        }
+    }
+
+    solution = s;
+}
+
+fillGrid();
+
+function highlightSameNumbers(button) {
+    for (let a of buttons){
+        if (a.innerText == button.innerText){
+            a.classList.add("highlight");
+        }
+    }
+}
+
+function deHighlightGrid() {
+    for (let a of buttons){
+            a.classList.remove("highlight");
+    }
+}
+
+function deHighlightOptions() {
+    for (let a of options){
+        a.classList.remove("highlight");
+    }
+}
+
+let options = document.getElementsByClassName("option");
+function highlightRequiredOptions(button) {
+    deHighlightOptions();
+    let row = parseInt(button.id[0]);
+    let col = parseInt(button.id[2]);
+    for (let i = 0; i < 9; i++) {
+        if (isValid(grid, row, col, i + 1)) {
+            options[i].classList.add("highlight");
+        }
+    }
+}
+
+function highlightRowColBox(buton) {
+    let row = parseInt(buton.id[0]);
+    let col = parseInt(buton.id[2]);
+    let startRow = Math.floor(row / 3) * 3;
+    let startCol = Math.floor(col / 3) * 3;
+
+    for (let i = 0; i < 9; i++){
+        document.getElementById(`${i}-${col}`).classList.add("highlight");
+        document.getElementById(`${row}-${i}`).classList.add("highlight");
+        document.getElementById(`${startRow + Math.floor(i / 3)}-${startCol + (i % 3)}`).classList.add("highlight");
+    }
+}
+
+for (let button of buttons){
+    button.addEventListener("click", () =>{
+        deHighlightCurCell();
+        deHighlightGrid();
+        deHighlightOptions();
+        let curNum = parseInt(button.innerText);
+        if (isNaN(curNum)){
+            highlightCurCell(button);
+        }
+        if (isNaN(curNum)){
+            highlightRequiredOptions(button);
+            highlightRowColBox(button);
+            input = button;
+        }
+        else{
+            highlightSameNumbers(button);
+        }
+    });
+}
+
 for (let option of options){
     option.addEventListener("click", () =>{
-        let n = (input.id[0] - '0') * 9 + (input.id[2] - '0');
-        if (option.innerText != solution[n]){
-            if (input.innerText == '0'){
-                mistakes++;
-                updateMistake(mistakes);
-            }
-            if(mistakes == 4){
-                let q = prompt("You have made 4 mistakes\nSo please type 1 if u would like go with the same game or 2 if you want a new game");
-                while (parseInt(q) != 1 && parseInt(q) != 2){
-                    q = prompt("You have made 4 mistakes\nSo please type 1 if u would like go with the same game or 2 if you want a new game");
+        if (input == null){
+            return;
+        }
+        if (!isNaN(parseInt(input.innerText))){
+            return;
+        }
+        let row = parseInt(input.id[0]);
+        let col = parseInt(input.id[2]);
+
+        if (option.innerText != solution[9 * row + col]){
+            mistakes++;
+            updateMistakes();
+            if (mistakes == 4){
+                let userInput = 0;
+                while(userInput != 1 && userInput != 2){
+                    userInput = parseInt(prompt(`Since you have made 4 errors\nPress "1" for continuing the same game and "2" for a new game`));
                 }
-                if (parseInt(q) == 1){
+                if (userInput == 1){
                     resetGame();
                 }
                 else{
                     newGame();
                 }
-                updateMistake(0);
-                mistakes = 0;
             }
         }
         else{
             input.innerText = option.innerText;
-            grid[(input.id[0] - '0')][(input.id[2] - '0')] = parseInt(option.innerText);
+            grid[row][col] = parseInt(option.innerText);
         }
+
+        whetherCompleted();
     })
 }
 
-
-function highlightRowColBox(str) {
-    let row = parseInt(str[0]), col = parseInt(str[2]);
-    // removing the previous hightlights
-    for (let i = 0; i < 9; i++)    {
-        options[i].classList.remove("highlight");
-        for (let j = 0; j < 9; j++)        {
-            let str = "";
-            str += i;
-            str += '-';
-            str += j;
-            document.getElementById(str).classList.remove("highlight");    
-        }
-    }
-    // highlighting the options
-    for (let i = 1; i < 10; i++)    {
-        if (f(row, col, i) === true)
-            options[i - 1].classList.add("highlight");
-    }
-    // highlight the row, column and 3 X 3 grid
-    const startRow = Math.floor(row / 3) * 3;
-    const startCol = Math.floor(col / 3) * 3;
-    for (let i = 0; i < 9; i++)    {
-        let str = "";
-        str += row;
-        str += '-';
-        str += i;
-        document.getElementById(str).classList.add("highlight");
-        str = "";
-        str += i;
-        str += '-';
-        str += col;
-        document.getElementById(str).classList.add("highlight");
-        str = "";
-        str += startRow + Math.floor(i / 3);
-        str += '-';
-        str += startCol + (i % 3);
-        document.getElementById(str).classList.add("highlight");
-    }
-}
-
-function f(row, col, num){
-    for (let i = 0; i < 9; i++) 
-        if (grid[row][i] === num)
-            return false;
-
-    // Check column
-    for (let i = 0; i < 9; i++)
-        if (grid[i][col] === num)
-            return false;
-
-    // Check 3x3 box
-    const startRow = Math.floor(row / 3) * 3;
-    const startCol = Math.floor(col / 3) * 3;
-    for (let i = 0; i < 3; i++) 
-        for (let j = 0; j < 3; j++)
-            if (grid[startRow + i][startCol + j] === num)
-                return false;
-    return true;
-}
-
-function checkGame() {
+function whetherCompleted() {
     for (let i = 0; i < 9; i++){
         for (let j = 0; j < 9; j++){
-            if (grid[i][j] == '0')
+            if (grid[i][j] == 0){
                 return;
+            }
         }
     }
 
-    alert("Congratulations!\nYou have successfully completed the game");
-
+    alert("Congratulations!\n You have completed the game");
+    alert("Please click on New Game to play a new game");
 }
 
-let resetBtn = document.getElementById("reset");
-resetBtn.addEventListener("click", resetGame)
-
-function resetGame() {
-    deHighlightOptions();
-    deHighlightgrid();
-    resetGrid();
-    updateMistake(0);
-    mistakes = 0;
-}
-
-function updateMistake(mistakes) {
+function updateMistakes() {
     document.getElementById("chances").innerText = `Mistakes: ${mistakes}/3`;
 }
 
-function deHighlightgrid() {
-    for (let buton of buttons){
-        buton.classList.remove("highlight");
-    }
-}
 
-function deHighlightOptions() {
-    for (let option of options){
-        option.classList.remove("highlight");
-    }    
-}
-
-function resetGrid() {
-    for (let i = 0, counter = 0; i < 9; i++)
-    {
-        for (let j = 0; j < 9; j++)
-        {
-            let id = `${i}-${j}`;
-            let element = document.getElementById(id);
-            element.innerText = problem[counter];
-            grid[i][j] = parseInt(problem[counter++]);
-        }
-    }
-}
-
-function highlightSameNumbers(str){
-    deHighlightgrid();
-    deHighlightOptions();
-    for (let button of buttons){
-        if (button.innerText === str){
-            button.classList.add("highlight");
-        }
-    }
-}
-
-let newGameBtn = document.getElementById("newGame");
-newGameBtn.addEventListener("click", newGame);
-
-function newGame() {
-    deHighlightgrid();
-    deHighlightOptions();
-    updateMistake(0);
-    mistakes = 0;
-    grid = [[], [], [], [], [], [], [], [], []];
-    let ind = Math.floor(questions.length * Math.random());
-    problem = questions[ind];
-    let ans = [];
-    for (let i = 0, counter = 0; i < 9; i++)
-    {
-        ans.push([]);
-        for (let j = 0; j < 9; j++)
-        {
-            
-            let id = `${i}-${j}`;
-            let element = document.getElementById(id);
-            element.innerText = problem[counter];
-            ans[i][j] = parseInt(problem[counter]);
-            grid[i][j] = parseInt(problem[counter++]);
-        }
-    }
-    ans = solveSudoku(ans);
-    if (ans === "No solution exists."){
-        newGame();
-        return;
-    }
-    solution = "";
-    for (let i = 0; i < 9; i++){
-        for (let j = 0; j < 9; j++){
-            solution += ans[i][j].toString();
-        }
-    }
-}
-
-
-// solving the sudoku
+// // solving the sudoku
 function solveSudoku(board) {
     if (solve(board)) {
         return board;
@@ -347,3 +270,38 @@ function isValid(board, row, col, num) {
     return true;
 }
 
+let resetBtn = document.getElementById("reset");
+resetBtn.addEventListener("click", resetGame);
+
+let newGameBtn = document.getElementById("newGame");
+newGameBtn.addEventListener("click", newGame);
+
+function resetGame() {
+    deHighlightGrid();
+    deHighlightOptions();
+    grid = [];
+    solution = [];
+    fillGrid();
+    mistakes = 0;
+    updateMistakes();
+    deHighlightCurCell();
+}
+
+function newGame() {
+    deHighlightGrid();
+    deHighlightOptions();
+    load();
+    fillGrid();
+    updateMistakes();
+    deHighlightCurCell();
+}
+
+function highlightCurCell(button){
+    button.classList.add("highlightCurCell");
+}
+
+function deHighlightCurCell() {
+    for (let button of buttons){
+        button.classList.remove("highlightCurCell");
+    }
+}
