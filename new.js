@@ -10,6 +10,7 @@ const board = document.getElementById("board");
 const mistakesDisplay = document.getElementById("chances");
 const resetButton = document.getElementById("reset");
 const newGameButton = document.getElementById("newGame");
+const hintButton = document.getElementById("hint");
 
 // ---------------------------------------------------------------------------------
 // Game State
@@ -20,6 +21,8 @@ let game = {
     solution: [],
     mistakes: 0,
     selectedTile: null,
+    hintsUsed: 0,
+    hintedTiles: [],
 };
 
 // ---------------------------------------------------------------------------------
@@ -94,7 +97,10 @@ function createGrid() {
 function startNewGame() {
     clearHighlights();
     game.mistakes = 0;
+    game.hintsUsed = 0;
+    game.hintedTiles = [];
     updateMistakesDisplay();
+    hintButton.disabled = false;
 
     let randomIndex = Math.floor(questions.length * Math.random());
     game.problem = questions[randomIndex];
@@ -121,6 +127,7 @@ function fillGrid() {
         for (let j = 0; j < 9; j++) {
             const tile = document.getElementById(`${i}-${j}`);
             if (tile) {
+                tile.classList.remove("hint-tile");
                 const value = game.grid[i][j];
                 tile.innerText = (value === 0) ? "" : value;
             }
@@ -131,7 +138,10 @@ function fillGrid() {
 function resetGame() {
     clearHighlights();
     game.mistakes = 0;
+    game.hintsUsed = 0;
+    game.hintedTiles = [];
     updateMistakesDisplay();
+    hintButton.disabled = false;
 
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -175,7 +185,7 @@ function handleTileClick(event) {
         highlightSameNumbers(clickedTile);
     }
 
-    if (game.problem[row * 9 + col] !== ' ') {
+    if (game.problem[row * 9 + col] !== ' ' || game.hintedTiles.some(h => h.row === row && h.col === col)) {
         game.selectedTile = null;
         return;
     }
@@ -184,6 +194,43 @@ function handleTileClick(event) {
     clickedTile.classList.add("highlightCurCell");
     highlightRowColBox(clickedTile);
     highlightRequiredOptions(clickedTile);
+}
+
+// =================================================================================
+// Hint Logic
+// =================================================================================
+
+function giveHint() {
+    if (game.hintsUsed >= 3) return;
+
+    const emptyCells = [];
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (game.grid[i][j] === 0) {
+                emptyCells.push({ row: i, col: j });
+            }
+        }
+    }
+
+    if (emptyCells.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * emptyCells.length);
+    const { row, col } = emptyCells[randomIndex];
+    const solutionValue = game.solution[row][col];
+
+    const tile = document.getElementById(`${row}-${col}`);
+    tile.innerText = solutionValue;
+    tile.classList.add("hint-tile");
+
+    game.grid[row][col] = solutionValue;
+    game.hintedTiles.push({ row, col });
+    game.hintsUsed++;
+
+    if (game.hintsUsed >= 3) {
+        hintButton.disabled = true;
+    }
+
+    checkCompletion();
 }
 
 // =================================================================================
@@ -299,6 +346,7 @@ function isValid(board, row, col, num) {
 
 resetButton.addEventListener("click", resetGame);
 newGameButton.addEventListener("click", startNewGame);
+hintButton.addEventListener("click", giveHint);
 
 // =================================================================================
 // Start the Game
