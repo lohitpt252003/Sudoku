@@ -1,4 +1,3 @@
-
 // =================================================================================
 // Sudoku Game (Expert Mode)
 // =================================================================================
@@ -245,6 +244,10 @@ function giveHint() {
     game.grid[row][col] = solutionValue;
     game.hintedTiles.push({ row, col });
     game.hintsUsed++;
+
+    game.undoStack = [];
+    game.redoStack = [];
+    updateUndoRedoButtons();
 
     if (game.hintsUsed >= 3) {
         hintButton.disabled = true;
