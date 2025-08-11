@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +17,15 @@
         </div>
         <div id="heading">Sudoku - Expert</div>
         <hr>
-        <div id="board"></div>
+        <div class="game-container">
+            <div id="board"></div>
+            <div id="solution-board" class="hidden"></div>
+        </div>
         <hr>
         <div id="options"></div>
         <hr>
         <div id="game-controls">
+            <button id="solve">Solve</button>
             <button id="hint">Hint</button>
             <button id="undo">Undo</button>
             <button id="redo">Redo</button>

@@ -1,3 +1,4 @@
+
 * {
     padding: 0;
     margin: 0;
@@ -14,7 +15,7 @@ body {
 
 hr {
     width: 100%;
-    max-width: 564px;
+    max-width: 1158px; /* Adjusted for two boards */
     border-top: 2px solid #555;
     margin: 20px auto;
 }
@@ -25,13 +26,18 @@ hr {
     margin-bottom: 20px;
 }
 
-#board {
+.game-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#board, #solution-board {
     width: 564px;
     height: 546px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 0 auto;
     box-shadow: 0 0 10px rgb(16, 16, 16);
     border-radius: 10px;
 }
@@ -109,7 +115,7 @@ hr {
     background-color: #add8e6;
 }
 
-#reset, #newGame, #undo, #redo, #hint {
+#reset, #newGame, #undo, #redo, #hint, #solve {
     width: max-content;
     height: max-content;
     padding: 10px;
@@ -121,7 +127,7 @@ hr {
     margin: 0 5px;
 }
 
-#reset:hover, #newGame:hover, #undo:hover, #redo:hover, #hint:hover {
+#reset:hover, #newGame:hover, #undo:hover, #redo:hover, #hint:hover, #solve:hover {
     border-radius: 10px;
 }
 
@@ -201,7 +207,7 @@ body.dark-mode {
     color: #fff;
 }
 
-.dark-mode #board {
+.dark-mode #board, .dark-mode #solution-board {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
@@ -253,7 +259,8 @@ body.dark-mode {
 .dark-mode #newGame,
 .dark-mode #undo,
 .dark-mode #redo,
-.dark-mode #hint {
+.dark-mode #hint,
+.dark-mode #solve {
     background-color: #ff6347;
     color: #fff;
     border: 1px solid #fff;

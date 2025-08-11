@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +19,15 @@
         <hr>
         <div id="chances">Mistakes: 0/3</div>
         <br>
-        <div id="board"></div>
+        <div class="game-container">
+            <div id="board"></div>
+            <div id="solution-board" class="hidden"></div>
+        </div>
         <hr>
         <div id="options"></div>
         <hr>
         <div id="game-controls">
+            <button id="solve">Solve</button>
             <button id="hint">Hint</button>
             <button id="reset">Reset</button>
             <button id="newGame">New Game</button>

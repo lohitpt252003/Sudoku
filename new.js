@@ -7,10 +7,12 @@
 // ---------------------------------------------------------------------------------
 const optionsContainer = document.getElementById("options");
 const board = document.getElementById("board");
+const solutionBoard = document.getElementById("solution-board");
 const mistakesDisplay = document.getElementById("chances");
 const resetButton = document.getElementById("reset");
 const newGameButton = document.getElementById("newGame");
 const hintButton = document.getElementById("hint");
+const solveButton = document.getElementById("solve");
 
 // ---------------------------------------------------------------------------------
 // Game State
@@ -63,6 +65,7 @@ const questions = [
 function initializeGame() {
     createOptions();
     createGrid();
+    createSolutionGrid();
     startNewGame();
 }
 
@@ -90,6 +93,19 @@ function createGrid() {
     }
 }
 
+function createSolutionGrid() {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            let tile = document.createElement("div");
+            tile.id = `sol-${i}-${j}`;
+            tile.classList.add("tile");
+            if ((j + 1) % 3 === 0 && j < 8) tile.classList.add("border-right");
+            if ((i + 1) % 3 === 0 && i < 8) tile.classList.add("border-bottom");
+            solutionBoard.append(tile);
+        }
+    }
+}
+
 // =================================================================================
 // Game Flow
 // =================================================================================
@@ -101,6 +117,7 @@ function startNewGame() {
     game.hintedTiles = [];
     updateMistakesDisplay();
     hintButton.disabled = false;
+    solutionBoard.classList.add("hidden");
 
     let randomIndex = Math.floor(questions.length * Math.random());
     game.problem = questions[randomIndex];
@@ -142,6 +159,7 @@ function resetGame() {
     game.hintedTiles = [];
     updateMistakesDisplay();
     hintButton.disabled = false;
+    solutionBoard.classList.add("hidden");
 
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -197,7 +215,7 @@ function handleTileClick(event) {
 }
 
 // =================================================================================
-// Hint Logic
+// Hint and Solve Logic
 // =================================================================================
 
 function giveHint() {
@@ -231,6 +249,16 @@ function giveHint() {
     }
 
     checkCompletion();
+}
+
+function showSolution() {
+    solutionBoard.classList.remove("hidden");
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const tile = document.getElementById(`sol-${i}-${j}`);
+            tile.innerText = game.solution[i][j];
+        }
+    }
 }
 
 // =================================================================================
@@ -347,6 +375,7 @@ function isValid(board, row, col, num) {
 resetButton.addEventListener("click", resetGame);
 newGameButton.addEventListener("click", startNewGame);
 hintButton.addEventListener("click", giveHint);
+solveButton.addEventListener("click", showSolution);
 
 // =================================================================================
 // Start the Game
